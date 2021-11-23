@@ -1,24 +1,57 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import AddForm from "./components/AddForm";
+import ListTasks from "./components/ListTasks";
+import Sidebar from "./components/Sidebar";
+import listTasksService from "./listTasksService";
+
 
 function App() {
+
+  const [lists, setLists] = useState([]);
+  const [activeList, setActiveList] = useState({});
+  
+
+
+  useEffect(() => {
+    listTasksService.getAll()
+      .then(res => {
+        setLists(res)
+        listTasksService.getListById(res[0].listId)
+        .then(res => setActiveList(res))
+      })
+  }, []);
+  
+
+
+  
+
+  const useChangeActiveList = (listId) => {
+    listTasksService.getListById(listId)
+      .then(res => {
+        setActiveList(res);
+        console.log(res);
+      })
+    // .then(res => );
+  }
+
+  // const addNewTask = (t) => {
+  //   setActiveList({...activeList, tasks: [...activeList.tasks, t]})
+  //   const newList = [...lists];
+  //   let findIndex = newList.findIndex(l => l.id == activeList.id)
+  //   newList[findIndex] = {...activeList, tasks:[...activeList.tasks, t]}
+  //   setLists(newList)
+  // }
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    
+      <div className="content card flex-row ">
+        <Sidebar onClick={useChangeActiveList} lists={lists}/>
+        <div className="selected-list">
+          <ListTasks activeList={activeList} />
+          {/* <AddForm onSubmit={addNewTask}/> */}
+        </div> 
+      </div>
+    
   );
 }
 
