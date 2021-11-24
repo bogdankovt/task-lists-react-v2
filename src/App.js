@@ -10,7 +10,7 @@ function App() {
 
   const [lists, setLists] = useState([]);
   const [activeList, setActiveList] = useState({title: "List not selected"});
-  const [update, setUpdate] = useState([]);
+  const [lastUpdate, setLastUpdate] = useState([]);
 
 
   const updateLists = () => {
@@ -34,11 +34,10 @@ function App() {
 
   useEffect(() => {
     if(activeList.listId) {
-      console.log('updated');
       updateActiveList(activeList.listId)
       updateLists()
     }
-  }, [update])
+  }, [lastUpdate])
 
 
 
@@ -46,15 +45,21 @@ function App() {
 
   const changeActiveList = (listId) => {
     updateActiveList(listId)
-    // .then(res => );
   }
 
   const addNewTask = (t) => {
     if(activeList.listId) {
+      console.log(t);
       listTasksService.createTaskForList(activeList.listId, t)
-      .then(res => console.log(res))
-      setUpdate(new Date().getTime())
+      .then(trigerUpdate);
+      }
+    
     }
+
+
+  const deleteTask = (taskId) => {
+    ListTasksService.removeTask(taskId)
+    .then(trigerUpdate)
   }
   
   return (
@@ -62,12 +67,16 @@ function App() {
       <div className="content card flex-row ">
         <Sidebar onClick={changeActiveList} lists={lists}/>
         <div className="selected-list">
-          <ListTasks activeList={activeList} />
-          <AddForm onSubmit={addNewTask} onSubmit={addNewTask}/>
+          <ListTasks activeList={activeList} onDelete={deleteTask}/>
+          <AddForm onSubmit={addNewTask}/>
         </div> 
       </div>
     
   );
+
+  function trigerUpdate() {
+    setLastUpdate(new Date().getTime());
+  }
 }
 
 export default App;

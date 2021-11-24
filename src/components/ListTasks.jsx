@@ -2,9 +2,12 @@ import React from "react";
 import Task from "./Task";
 
 
-const ListTasks = ({activeList}) => {
+const ListTasks = ({activeList, ...props}) => {
 
     let activeListContent;
+
+
+    
 
     if(activeList.tasks) {
         if(!activeList.tasks.length) {
@@ -17,7 +20,7 @@ const ListTasks = ({activeList}) => {
                         <hr/>
                     </div>
                     <div className="active-list-tasks-content overflow-auto">
-                        {activeList.tasks.map(t => <Task task={t}/>)}
+                        {activeList.tasks.map(t => <Task onDelete={props.onDelete} key={t.taskId} task={t}/>)}
                     </div>
                 </div>
             )

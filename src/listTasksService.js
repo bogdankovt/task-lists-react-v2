@@ -18,7 +18,15 @@ export default {
                 'Content-Type': 'application/json'
               },
             body: JSON.stringify(t)
-          });
+          })
+          .then(res => res.ok ? res.json() : Promise.reject(res.statusText))
+    },
+
+    removeTask(taskId) {
+        return fetch(`http://localhost:5000/tasks/${taskId}`, {
+            method: 'DELETE',
+        })
+        .then(res => res.status == 204 ? 'removed' : Promise.reject(res.statusText))  
     }
     // createNew(taskObj) {
     //     return fetch(`${tasksEndpoint}?listId=18`, {
