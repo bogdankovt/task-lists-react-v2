@@ -13,54 +13,126 @@
 }
 
 .content {
-  flex: 0 1 900px;
-  background-color: red;
+  flex: 0 1 1300px;
   display: flex;
-  min-height: 700px;
+  min-height: 900px;
 }
 
 .sidebar {
-  background-color: aqua;
-  flex-basis: 250px;
-  padding: 20px;
+  flex-basis: 325px;
+  padding: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.message-box {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.active-list-content {
+  width: 100%;
+  flex: 0 0 700px;
+  /* background-color: #EEEEEE; */
+  padding: 30px;
+}
 .selected-list {
-  background-color: grey;
   flex-grow: 1;
-  padding: 20px 20px;
+  padding: 30px 30px 30px 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-
-ul > li {
-  list-style-type: none;
-  margin-bottom: 5px;
+.active-list-tasks-content {
+  flex: 0 0 590px;
 }
+
+.active-list-tasks-content > .card {
+  margin-top: 10px;
+}
+
 
 h1 {
   margin-bottom:10px;
 }
-ol {
-  list-style-position: inside;
-  margin-left: 10px;
-}
 
-ul > li > a {
-  opacity: 0.7;
-  list-style-type: none;
+.sidebar > ul > li {
   cursor: pointer;
 }
 
-ul > li > a:hover {
-  opacity: 1;
+
+
+
+hr {
+  margin:0 !important;
+}
+
+h5.card-title {
+  font-size: 1.1rem;
 }
 
 
-.add-form {
-  margin-top:10px;
+
+.card-header {
+  display: flex; 
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.card-header > h5 > i {
+  display: none;
+  font-size: 1.2em;
+  line-height: 0;
+}
+
+h5.card-title {
+  margin-bottom: 0;
+  margin: .1em 0;
+}
+
+.card-actions > span {
+  margin-right: 10px;
+  font-size: 0.9em;
+}
+
+.card-actions > i {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.card-actions > i:hover {
+  opacity: 1;
+}
+
+.card-body {
+  color:#444;
+}
+
+
+
+
+.form-control {
+  border: none !important;
+  border-radius: 0 !important;
+  padding:0 !important;
+
+}
+
+.form-control:focus, .form-control:active {
+  outline:0px !important;
+  box-shadow: none !important;
+}
+
+.input-group {
+  border-bottom: 1px solid  #ced4da;
+}
+
+.input-group-text {
+  border: none !important;
+  background-color: #fff !important;
+
 }

@@ -4,20 +4,26 @@ import React from "react";
 
 const Sidebar = ({lists, ...props}) => {
 
-    const changeActive = (lisId) => {
+    const changeActiveList = (lisId) => {
         props.onClick(lisId);
     }  
     return (
       <div className="sidebar">
-          <div>
-            <ul>
+         
+
+            <ul className="list-group w-100">
                 {lists.map(l => 
-                  <li key={l.listId}>
-                    <a onClick={() => changeActive(l.listId)}><span>({l.count})</span> {l.title}</a>
-                  </li> 
+    
+                    <li key={l.listId} onClick={() => changeActiveList(l.listId)} className="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                      {l.title}
+                      <span className="badge badge-primary badge-pill">{l.countNotDoneTask}</span>
+                    </li>
+
                 )}
+              
             </ul>
-          </div>
+
+          
       </div>  
     )
 }
