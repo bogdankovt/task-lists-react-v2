@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import AddForm from "./components/AddForm";
+import EditTaskModal from "./components/EditTaskModal";
 import ListTasks from "./components/ListTasks";
 import Sidebar from "./components/Sidebar";
-import listTasksService from "./listTasksService";
-import ListTasksService from "./listTasksService";
+import ListTasksService from "./ListTasksService";
 
 
 function App() {
 
   const [lists, setLists] = useState([]);
   const [activeList, setActiveList] = useState({title: "List not selected"});
-  const [lastUpdate, setLastUpdate] = useState([]);
-
+  const [lastUpdate, setLastUpdate] = useState({});
+  const [modalData, setModalData] = useState({});
 
   const updateLists = () => {
     ListTasksService.getAll()
@@ -39,7 +39,9 @@ function App() {
     }
   }, [lastUpdate])
 
-
+  function trigerUpdate() {
+    setLastUpdate(new Date().getTime());
+  }
 
   
 
@@ -49,16 +51,19 @@ function App() {
 
   const addNewTask = (t) => {
     if(activeList.listId) {
-      console.log(t);
-      listTasksService.createTaskForList(activeList.listId, t)
+      ListTasksService.createTaskForList(activeList.listId, t)
       .then(trigerUpdate);
       }
-    
     }
 
 
   const deleteTask = (taskId) => {
     ListTasksService.removeTask(taskId)
+    .then(trigerUpdate)
+  }
+
+  const editTask = (t) => {
+    ListTasksService.updateTask(t)
     .then(trigerUpdate)
   }
   
@@ -67,16 +72,15 @@ function App() {
       <div className="content card flex-row ">
         <Sidebar onClick={changeActiveList} lists={lists}/>
         <div className="selected-list">
-          <ListTasks activeList={activeList} onDelete={deleteTask}/>
+          <ListTasks activeList={activeList} onDelete={deleteTask} onEdit={(s) => setModalData(s)}/>
           <AddForm onSubmit={addNewTask}/>
         </div> 
+        <EditTaskModal onSubmit={editTask} data={modalData}/>
       </div>
     
   );
 
-  function trigerUpdate() {
-    setLastUpdate(new Date().getTime());
-  }
+  
 }
 
 export default App;

@@ -1,26 +1,33 @@
 import React from "react";
 import Task from "./Task";
-
+import { useState, useRef } from "react";
 
 const ListTasks = ({activeList, ...props}) => {
 
     let activeListContent;
+    const tasksElement = useRef({});
 
-
+    const renderAllTask = () => {
+        tasksElement.current.classList.toggle('show-done')
+    }
     
 
     if(activeList.tasks) {
         if(!activeList.tasks.length) {
             activeListContent = <p>list <strong>{activeList.title}</strong> is empty</p>
         }else {
+            if(activeList.tasks.filter(t => t.isDone == false).count == 0) {
+                console.log('dsdsds');
+            }
             return (
                 <div className="active-list-content card flex-column">
-                    <div className="active-list-content-header flex-grow-1">
+                    <div className="active-list-content-header d-flex align-items-center justify-content-between">
                         <h3>{activeList.title}</h3>
-                        <hr/>
+                        <input defaultChecked={true} type="checkbox" onChange={renderAllTask} />
                     </div>
-                    <div className="active-list-tasks-content overflow-auto">
-                        {activeList.tasks.map(t => <Task onDelete={props.onDelete} key={t.taskId} task={t}/>)}
+                    <hr/>
+                    <div ref={tasksElement} className="active-list-tasks-content overflow-auto show-done">
+                        {activeList.tasks.map(t => <Task onDelete={props.onDelete} onEdit={props.onEdit} key={t.taskId} task={t}/>)}
                     </div>
                 </div>
             )

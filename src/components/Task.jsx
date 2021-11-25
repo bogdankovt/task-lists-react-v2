@@ -30,7 +30,7 @@ const Task = ({task, ...props}) => {
                 <h5 className="card-title">{task.title}<i className="bi bi-check-all"></i></h5>
                 <div className="card-actions">
                     <span className="action-content">{spanDate}</span>
-                    <i className="bi bi-pencil-square edit"></i>
+                    <i className="bi bi-pencil-square edit" onClick={() => props.onEdit(task)} data-toggle="modal" data-target="#taskEditModal" ></i>
                     <i className="bi bi-trash remove-icon" onClick={() => props.onDelete(task.taskId)}></i>
                 </div>
             </div>

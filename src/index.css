@@ -112,7 +112,13 @@ h5.card-title {
   color:#444;
 }
 
+.done {
+  display: none;
+}
 
+.show-done > .done {
+  display: flex;
+}
 
 
 .form-control {
