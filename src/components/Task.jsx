@@ -6,7 +6,7 @@ const formatDate = (date) => {
 }
 const Task = ({task, ...props}) => {
 
-    let taskClasses = ['card']
+    let taskClasses = ['card mt-3']
     let taskHeaderClasses = ["card-header", "text-white" ]
     let spanDate = formatDate(new Date(task.dueDate))
     let date = new Date(task.dueDate).setHours(0,0,0,0);
@@ -30,7 +30,7 @@ const Task = ({task, ...props}) => {
                 <h5 className="card-title">{task.title}<i className="bi bi-check-all"></i></h5>
                 <div className="card-actions">
                     <span className="action-content">{spanDate}</span>
-                    <i className="bi bi-pencil-square edit" onClick={() => props.onEdit(task)} data-toggle="modal" data-target="#taskEditModal" ></i>
+                    <i className="bi bi-pencil-square edit mr-1" onClick={() => props.onEdit(task)} data-toggle="modal" data-target="#taskEditModal" ></i>
                     <i className="bi bi-trash remove-icon" onClick={() => props.onDelete(task.taskId)}></i>
                 </div>
             </div>

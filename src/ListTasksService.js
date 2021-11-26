@@ -34,7 +34,14 @@ export default {
             method: 'DELETE',
         })
         .then(res => res.status == 204 ? 'removed' : Promise.reject(res.statusText))  
+    },
+    getCollectionToday() {
+        return fetch('https://localhost:5001/collection/today')
+            .then(res => res.ok ? res.json() : Promise.reject(res.statusText))
     }
+
+
+
     // createNew(taskObj) {
     //     return fetch(`${tasksEndpoint}?listId=18`, {
     //         method: 'POST',

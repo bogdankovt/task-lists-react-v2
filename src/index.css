@@ -22,23 +22,19 @@
   flex-basis: 325px;
   padding: 30px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .message-box {
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
 }
 
-.active-list-content {
-  width: 100%;
-  flex: 0 0 700px;
-  /* background-color: #EEEEEE; */
-  padding: 30px;
-}
+
 .selected-list {
   flex-grow: 1;
   padding: 30px 30px 30px 0;
@@ -47,11 +43,7 @@
   justify-content: space-between;
 }
 .active-list-tasks-content {
-  flex: 0 0 590px;
-}
-
-.active-list-tasks-content > .card {
-  margin-top: 10px;
+  height: 550px;
 }
 
 
@@ -63,7 +55,9 @@ h1 {
   cursor: pointer;
 }
 
-
+u {
+  font-size: 13px;
+}
 
 
 hr {
@@ -116,10 +110,21 @@ h5.card-title {
   display: none;
 }
 
+.done h5 {
+  text-decoration: line-through;
+}
+
+
+.done h5 > i {
+  display: inline !important;
+}
 .show-done > .done {
   display: flex;
 }
 
+.active {
+  color:red;
+}
 
 .form-control {
   border: none !important;
@@ -141,4 +146,12 @@ h5.card-title {
   border: none !important;
   background-color: #fff !important;
 
+}
+
+.today-tasks {
+  height:700px;
+}
+
+.text-success.active {
+  color:red !important;
 }
