@@ -6,20 +6,18 @@ import ListTasksService from "../ListTasksService";
 import AddForm from "./AddForm";
 import EditTaskModal from "./EditTaskModal";
 
-const useLists = () => {}
 
 const ListTasks = () => {
 
     const [activeList, setActiveList] = useState({tasks: []})
     const [lastUpdate, setLastUpdate] = useState([]);
-    const [modalData, setModalData] = useState({taskId : '', title : '', desc : '', isDone: '', dueDate: ''});
+    const [modalData, setModalData] = useState({});
     const [showDone, setShowDone] = useState(false);
     
     let queryParams = useParams();
     let activeListContext;
     
     const visibleTask = showDone ? activeList.tasks : activeList.tasks.filter(t => !t.isDone)
-
 
     //getAndSetTasksForActiveList
     const updateActiveList = (listId) => {
@@ -42,10 +40,9 @@ const ListTasks = () => {
     useEffect(() => {
         updateActiveList(queryParams.id)
     }, [lastUpdate])
-
+    
     //tasks update
 
-    console.log(visibleTask);
     const addNewTask = (t) => {
         ListTasksService.createTaskForList(queryParams.id, t)
         .then(trigerUpdate);
@@ -78,7 +75,7 @@ const ListTasks = () => {
                         <label className="form-check-label mr-2" htmlFor="checkbox-show-done">
                         All
                         </label>
-                        <input type="checkbox" id="checkbox-show-done" onChange={(e) =>  setShowDone(e.target.checked)}/>
+                        <input type="checkbox" id="checkbox-show-done" onChange={e => setShowDone(e.target.checked)} />
                     </div>
                 </div>
                 <hr/>

@@ -83,7 +83,6 @@ function App() {
             </Routes>
           </div>
         </div>
-        {/* <EditTaskModal onSubmit={editTask} data={modalData}/> */}
       </div>
     
   );

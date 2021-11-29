@@ -106,9 +106,6 @@ h5.card-title {
   color:#444;
 }
 
-.done {
-  display: none;
-}
 
 .done h5 {
   text-decoration: line-through;
@@ -117,9 +114,6 @@ h5.card-title {
 
 .done h5 > i {
   display: inline !important;
-}
-.show-done > .done {
-  display: flex;
 }
 
 .active {
