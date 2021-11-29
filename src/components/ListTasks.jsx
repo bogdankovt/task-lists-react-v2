@@ -18,6 +18,8 @@ const ListTasks = () => {
     let queryParams = useParams();
     let activeListContext;
     
+    const visibleTask = showDone ? activeList.tasks : activeList.tasks.filter(t => !t.isDone)
+
 
     //getAndSetTasksForActiveList
     const updateActiveList = (listId) => {
@@ -37,20 +39,21 @@ const ListTasks = () => {
     }, [queryParams.id]);
 
 
-    console.log(activeList);
     useEffect(() => {
         updateActiveList(queryParams.id)
     }, [lastUpdate])
 
-    const visibleTask = showDone ? activeList.tasks : activeList.tasks.filter(t => t.isDone)
     //tasks update
+
+    console.log(visibleTask);
     const addNewTask = (t) => {
         ListTasksService.createTaskForList(queryParams.id, t)
         .then(trigerUpdate);
     }
 
     const editTask = (t) => {
-        console.log(t);
+        ListTasksService.updateTask(t)
+        .then(trigerUpdate)
     }
 
     const deleteTask = (taskId) => {
@@ -71,17 +74,17 @@ const ListTasks = () => {
             <div>
                 <div className="active-list-content-header d-flex justify-content-between align-items-center">
                     <h3>{activeList.title}</h3>
-                    <div class="form-check d-flex align-items-center">
-                        <label class="form-check-label mr-2" for="checkbox-show-done">
+                    <div className="form-check d-flex align-items-center">
+                        <label className="form-check-label mr-2" htmlFor="checkbox-show-done">
                         All
                         </label>
-                        <input type="checkbox" id="checkbox-show-done"/>
+                        <input type="checkbox" id="checkbox-show-done" onChange={(e) =>  setShowDone(e.target.checked)}/>
                     </div>
                 </div>
                 <hr/>
                
                 <div className="active-list-tasks-content overflow-auto show-done">
-                    {activeList.tasks.map(t => <Task  key={t.taskId} task={t} onEdit={(t) => setModalData(t)} onDelete={deleteTask}/>)}
+                    {visibleTask.map(t => <Task  key={t.taskId} task={t} onEdit={setModalData} onDelete={deleteTask}/>)}
                 </div>
             </div>
     }

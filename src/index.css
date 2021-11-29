@@ -152,6 +152,6 @@ h5.card-title {
   height:700px;
 }
 
-.text-success.active {
+a.text-success.active {
   color:red !important;
 }

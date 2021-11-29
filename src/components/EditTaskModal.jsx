@@ -23,10 +23,12 @@ export default function EditTaskModal({data,...props}) {
     const onChange = (e) => {       
         setTask(task => ({...task, [e.target.name]: e.target.value})) ;
     }
+    
     const sendToApp = (e) => {
-        // e.preventDefault()
-        // props.onSubmit(props.task)
-        // window.$(modal.current).modal('hide')
+        e.preventDefault()
+        props.onSubmit(task)
+        window.$(modal.current).modal('hide')
+        e.target.reset()
     }   
 
 
@@ -61,7 +63,7 @@ export default function EditTaskModal({data,...props}) {
                                     <input onChange={onChange} name="dueDate" type="date" value={task.dueDate} className="form-control" placeholder="Expiration date"/>
                                 </div>
                                 <div className="modal-footer d-flex justify-content-between">
-                                    <BootstrapSwitchButton onChange={(c) => props.task.isDone = c} checked={task.isDone} onlabel='Ready' offlabel='Not Ready' width={100} size='xs' onstyle="outline-success" offstyle="outline-danger"/>
+                                    <BootstrapSwitchButton onChange={(c) => task.isDone = c} checked={task.isDone} onlabel='Ready' offlabel='Not Ready' width={100} size='xs' onstyle="outline-success" offstyle="outline-danger"/>
                                     <button type="submit" className="btn btn-sm btn-success my-1 task-save-button">Save changes</button>
                                 </div>
                             </form>                        

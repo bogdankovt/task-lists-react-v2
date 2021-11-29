@@ -36,7 +36,7 @@ const AddForm = ({...props}) => {
                                     <div className="input-group-prepend">
                                     <i className="bi bi-calendar-date input-group-text" id="taskNewExpDate"></i>
                                     </div>
-                                    <input name="dueDate" value={dateToday} onChange={setField} type="date" className="form-control edit-exp-date" aria-describedby="taskNewExpDate" placeholder="Expiration date"></input>
+                                    <input name="dueDate" onChange={setField} type="date" className="form-control edit-exp-date" aria-describedby="taskNewExpDate" placeholder="Expiration date" required></input>
                                 </div>
                                 <button className="btn btn-sm btn-success mt-4 task-save-button w-100">Create New</button>
 
