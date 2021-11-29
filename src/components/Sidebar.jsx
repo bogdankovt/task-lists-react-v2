@@ -2,20 +2,31 @@ import React from "react";
 import ListTasksService from "../ListTasksService";
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchDashboard } from "../asyncActions/dashboard";
 
 const Sidebar = () => {
-    const [lists, setLists] = useState([]);
+    // const [lists, setLists] = useState([]);
+    const dispatch = useDispatch()
+    const lists = useSelector(state => state.dashboard.lists)
 
-    const updateLists = () => {
-      ListTasksService.getAll()
-        .then(res => {
-          setLists(res.lists)
-        })
-    }
+    console.log(lists)
 
     useEffect(() => {
-      updateLists()
-    }, []);
+      dispatch(fetchDashboard())
+    }, [])
+    // const updateLists = () => {
+    //   ListTasksService.getAll()
+    //     .then(res => {
+    //       setLists(res.lists)
+    //     })
+    // }
+
+    // useEffect(() => {
+    //   updateLists()
+    // }, []);
+
+    
 
     return (
       <div className="sidebar">

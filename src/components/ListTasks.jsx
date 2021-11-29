@@ -1,50 +1,45 @@
 import React from "react";
 import Task from "./Task";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect} from "react";
 import { useParams } from "react-router";
 import ListTasksService from "../ListTasksService";
 import AddForm from "./AddForm";
 import EditTaskModal from "./EditTaskModal";
-
+import { useSelector, useDispatch } from "react-redux";
+import { setActiveList } from "../store/activeList/actions";
+import { fetchDashboard, fetchListById } from "../asyncActions/dashboard";
 
 const ListTasks = () => {
 
-    const [activeList, setActiveList] = useState({tasks: []})
-    const [lastUpdate, setLastUpdate] = useState([]);
+    const dispatch = useDispatch()
+    const listId = useParams().id;
+    let activeListContext;
+    const activeList = useSelector(state => state.activeList)
+
     const [modalData, setModalData] = useState({});
     const [showDone, setShowDone] = useState(false);
-    
-    let queryParams = useParams();
-    let activeListContext;
-    
+    const [lastUpdate, setLastUpdate] = useState([]);
+
     const visibleTask = showDone ? activeList.tasks : activeList.tasks.filter(t => !t.isDone)
 
-    //getAndSetTasksForActiveList
-    const updateActiveList = (listId) => {
-        ListTasksService.getListById(listId)
-        .then(res => {
-            setActiveList(res)
-          })
-    }
-    
-    //update content
-    function trigerUpdate() {
+
+    useEffect(() => {
+        dispatch(fetchListById(listId))
+    }, [listId])
+
+    useEffect(() => {
+        dispatch(fetchListById(listId))
+        dispatch(fetchDashboard())
+    }, [lastUpdate])
+
+    const trigerUpdate = () => {
         setLastUpdate(new Date().getTime());
     }
 
-    useEffect(() => {
-        updateActiveList(queryParams.id)
-    }, [queryParams.id]);
-
-
-    useEffect(() => {
-        updateActiveList(queryParams.id)
-    }, [lastUpdate])
     
-    //tasks update
 
     const addNewTask = (t) => {
-        ListTasksService.createTaskForList(queryParams.id, t)
+        ListTasksService.createTaskForList(listId, t)
         .then(trigerUpdate);
     }
 
@@ -81,7 +76,9 @@ const ListTasks = () => {
                 <hr/>
                
                 <div className="active-list-tasks-content overflow-auto show-done">
+                    {/* {visibleTask.map(t => <Task  key={t.taskId} task={t} onEdit={setModalData} onDelete={deleteTask}/>)} */}
                     {visibleTask.map(t => <Task  key={t.taskId} task={t} onEdit={setModalData} onDelete={deleteTask}/>)}
+
                 </div>
             </div>
     }
