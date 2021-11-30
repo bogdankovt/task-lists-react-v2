@@ -9,13 +9,13 @@ export default {
             .then(res => res.ok ? res.json() : Promise.reject(res.statusText))
 
     },
-    createTaskForList(listId, t) {
-        return fetch(`http://localhost:5000/tasks?listId=${listId}`, {
+    createTaskForList(task) {
+        return fetch(`http://localhost:5000/tasks`, {
             method: 'POST', 
             headers: {
                 'Content-Type': 'application/json'
               },
-            body: JSON.stringify(t)
+            body: JSON.stringify(task)
           })
           .then(res => res.ok ? res.json() : Promise.reject(res.statusText))
     },
@@ -39,34 +39,4 @@ export default {
         return fetch('https://localhost:5001/collection/today')
             .then(res => res.ok ? res.json() : Promise.reject(res.statusText))
     }
-
-
-
-    // createNew(taskObj) {
-    //     return fetch(`${tasksEndpoint}?listId=18`, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify(taskObj)
-    //     })
-    //     .then(res => res.ok ? res.json() : Promise.reject(res.statusText))
-    // },
-    // update(taskObj) {
-    //     return fetch(`${tasksEndpoint}/${taskObj.taskId}`, {
-    //         method: 'PUT',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify(taskObj)
-    //     })
-    //     .then(res => res.ok ? res.json() : Promise.reject(res.statusText))    
-    // },
-    // remove(id) {
-    //     return fetch(`${tasksEndpoint}/${id}`, {
-    //         method: 'DELETE',
-    //     })
-    //     .then(res => res.status == 204 ? console.log('removed') : Promise.reject(res.statusText))    
-    // }
-
 }

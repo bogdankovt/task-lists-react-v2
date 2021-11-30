@@ -1,10 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { activeListSelector } from "../store/activeList/reducer";
 
 
 const AddForm = ({...props}) => {
 
+    const activeList = useSelector(activeListSelector)
+    
     const dateToday = new Date().toISOString().split('T')[0];
-    props.task = {title: '', desc:'', dueDate: dateToday}
+    props.task = {listId:  activeList.listId, title: '', desc:'', dueDate: dateToday}
 
     const submitHandle = (e) => {
         e.preventDefault();
