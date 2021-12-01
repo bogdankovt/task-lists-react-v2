@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from 'react'
 import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 
 const formatDate = (d) => {
-    return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`
+    return `${d.getFullYear()}-${('0' + d.getMonth() + 1).slice(-2)}-${('0' + d.getDate()).slice(-2)}`
 }
 
 export default function EditTaskModal({data,...props}) {

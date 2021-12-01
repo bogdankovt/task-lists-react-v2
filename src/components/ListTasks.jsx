@@ -7,6 +7,8 @@ import EditTaskModal from "./EditTaskModal";
 import { useSelector, useDispatch } from "react-redux";
 import { activeListSelector } from "../store/activeList/reducer";
 import * as asyncActions from "../asyncActions/index"
+import { Formik } from "formik";
+import * as yup from 'yup';
 
 function useActionCreator(actionCreator) {
     const dispatch = useDispatch();
@@ -42,6 +44,8 @@ const ListTasks = () => {
     const updateTask = useActionCreator(asyncActions.updateTask);
     const deleteTask = useActionCreator(asyncActions.deleteTask);
 
+
+    
 
     if (!activeList.tasks.length) {
         activeListContext =
@@ -81,7 +85,9 @@ const ListTasks = () => {
             <div className="active-list-content h-100">
                 {activeListContext}
             </div>
-            <AddForm onSubmit={createTask} />
+            {/* <AddForm onSubmit={createTask} /> */}
+            
+            <AddForm listId={listId} onSubmit={createTask}/>
             <EditTaskModal data={modalData} onSubmit={updateTask} />
         </div>
 

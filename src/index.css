@@ -149,3 +149,10 @@ h5.card-title {
 a.text-success.active {
   color:red !important;
 }
+
+.error-label {
+  margin-bottom: 0 !important;
+  align-self: center;
+  color:red;
+  font-size: 0.9em;
+}
