@@ -33,7 +33,7 @@ export default {
         return fetch(`http://localhost:5000/tasks/${taskId}`, {
             method: 'DELETE',
         })
-        .then(res => res.status == 204 ? 'removed' : Promise.reject(res.statusText))  
+        .then(res => res.status === 204 ? 'removed' : Promise.reject(res.statusText))  
     },
     getCollectionToday() {
         return fetch('https://localhost:5001/collection/today')

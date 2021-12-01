@@ -1,36 +1,39 @@
-import { map } from "jquery";
-import * as actions from "../types"
-import { useSelector } from "react-redux";
-import { activeListSelector } from "../activeList/reducer";
+import { combineReducers } from "redux";
+import {
+    TASK_CREATED,
+    TASK_UPDATED,
+    TASK_REMOVED,
+    DASHBOARD_LOADED
+} from "../types"
 
-const toOpenedTasks = (arr) => arr.reduce((a,b) => ({...a, [b['listId']]: b.countNotDoneTask}), {})
+const toOpenedTasks = (arr) => arr.reduce((a, b) => ({ ...a, [b['listId']]: b.countNotDoneTask }), {})
 
-
-const dashboardInit = {
-    tasksForToday: 0,
-    lists: [],
-    openedTasks: {} 
-}
-
-export const dashboardReducer = (state = dashboardInit, action) => {
+const openedTasksReducer = (state = {}, action) => {
+    const listId = action.payload?.listId;
     switch (action.type) {
-        case actions.DASHBOARD_LOADED:
-            return { ...action.payload, openedTasks: toOpenedTasks(action.payload.lists)};
+        case DASHBOARD_LOADED:
+            return toOpenedTasks(action.payload.lists);
 
-        case actions.TASK_CREATED: 
-            return {...state, openedTasks: {...state.openedTasks, [action.payload.listId] : state.openedTasks[action.payload.listId] +1}} 
+        case TASK_CREATED:
+            return { ...state, [listId]: state[listId] + 1 };
 
-        case actions.TASK_UPDATED:
-            const {task, newTask} = action.payload
-            return {...state, openedTasks: {...state.openedTasks, [task.listId] : state.openedTasks[task.listId] + (task.isDone - newTask.isDone)}} 
+        case TASK_UPDATED:
+            const { task, newTask } = action.payload
+            return { ...state, [task.listId]: state[task.listId] + (task.isDone - newTask.isDone) }
 
-        case actions.TASK_REMOVED:
-            return {...state, openedTasks: action.payload.isDone ? {...state.openedTasks} : {...state.openedTasks, [action.payload.listId] : state.openedTasks[action.payload.listId] -1}} 
+        case TASK_REMOVED:
+            return action.payload.isDone ? state : { ...state, [listId]: state[listId] - 1 }
 
         default:
             return state;
     }
 }
+
+export const dashboardReducer = combineReducers({
+    tasksForToday: (state = 0, { type, payload }) => type === DASHBOARD_LOADED ? payload.tasksForToday : state,
+    lists: (state = [], { type, payload }) => type === DASHBOARD_LOADED ? payload.lists : state,
+    openedTasks: openedTasksReducer
+})
 
 export const dashboardSelector = state => state.dashboard
 

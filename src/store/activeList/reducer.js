@@ -6,20 +6,12 @@ const activeListInit = {
     title: '',
     tasks: []
 }
-const updateTaskFromArray = ({task, newTask}, arr) => {
-    let newArr = [...arr]
-    const taskIndex = arr.findIndex(e => e.taskId == task.taskId)
-    const updatedElement = newArr[taskIndex]
-    
-    updatedElement.title = newTask.title
-    updatedElement.desc = newTask.desc
-    updatedElement.isDone = newTask.isDone
-    updatedElement.dueDate = newTask.dueDate
-    return newArr
+const updateTaskFromList = ({newTask}, arr) => {
+    return arr.map(t => t.taskId === newTask.taskId ? newTask : t)
 }
 
-const removeElInArray = (elem, arr) => {
-    return arr.filter(t => t.taskId != elem.taskId)
+const removeTaskFromList = (elem, arr) => {
+    return arr.filter(t => t.taskId !== elem.taskId)
 }
 
 export const activeListReducer = (state = activeListInit, action) => {
@@ -32,10 +24,10 @@ export const activeListReducer = (state = activeListInit, action) => {
             return {...state, tasks: [...state.tasks, action.payload]}
         
         case actions.TASK_UPDATED: 
-            return {...state, tasks: updateTaskFromArray(action.payload, state.tasks)}
+            return {...state, tasks: updateTaskFromList(action.payload, state.tasks)}
                 
         case actions.TASK_REMOVED:
-            return {...state, tasks: removeElInArray(action.payload, state.tasks)}
+            return {...state, tasks: removeTaskFromList(action.payload, state.tasks)}
 
         default:
             return state

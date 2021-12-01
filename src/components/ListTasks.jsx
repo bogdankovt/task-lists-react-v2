@@ -2,7 +2,6 @@ import React from "react";
 import Task from "./Task";
 import { useState, useMemo, useEffect } from "react";
 import { useParams } from "react-router";
-import ListTasksService from "../ListTasksService";
 import AddForm from "./AddForm";
 import EditTaskModal from "./EditTaskModal";
 import { useSelector, useDispatch } from "react-redux";
@@ -23,7 +22,6 @@ function useActionCreator(actionCreator) {
 const ListTasks = () => {
 
 
-    const dispatch = useDispatch()
     const listId = useParams().id;
     let activeListContext;
     const activeList = useSelector(activeListSelector)

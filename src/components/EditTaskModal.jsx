@@ -1,6 +1,5 @@
 import React from 'react'
 import { useRef, useState, useEffect } from 'react'
-import $ from 'jquery';
 import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 
 const formatDate = (d) => {

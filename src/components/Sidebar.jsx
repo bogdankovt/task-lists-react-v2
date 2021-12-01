@@ -1,6 +1,5 @@
 import React from "react";
-import ListTasksService from "../ListTasksService";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { dashboardSelector } from "../store/dashboard/reducer";
@@ -11,13 +10,11 @@ const Sidebar = () => {
     const dispatch = useDispatch()
 
     const dashboard = useSelector(dashboardSelector)
-    const state = useSelector(state => state)
 
     useEffect(() => {
       dispatch(fetchDashboard())
-    }, [])
+    }, [dispatch])
     
-    console.log(state);
 
     return (
       <div className="sidebar">
