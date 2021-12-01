@@ -1,5 +1,5 @@
 import ListTasksService from "../ListTasksService";
-import { addTaskToActiveList, setActiveList, removeTaskFromList } from "../store/activeList/actions"
+import { addTaskToActiveList, setActiveList, removeTaskFromList, updateTaskFromList } from "../store/activeList/actions"
 import { setDashboardAction,  } from "../store/dashboard/actions";
 
 export const fetchDashboard = () => dispatch => {
@@ -20,6 +20,11 @@ export const createTask = task => dispatch => {
     .then(dispatch);        
 }
 
+export const updateTask = (task, newTask) => dispatch => {
+    ListTasksService.updateTask(newTask)
+    .then(() => updateTaskFromList({task, newTask}))
+    .then(dispatch)      
+}
 
 export const deleteTask = task => dispatch => {
     ListTasksService.removeTask(task.taskId)

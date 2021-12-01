@@ -17,7 +17,7 @@ const Sidebar = () => {
       dispatch(fetchDashboard())
     }, [])
     
-    console.log(dashboard);
+    console.log(state);
 
     return (
       <div className="sidebar">

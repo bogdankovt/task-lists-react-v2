@@ -38,14 +38,10 @@ const ListTasks = () => {
         fetchListById(listId)
     }, [listId])
 
-    // useEffect(() => {
-    //     dispatch(fetchListById(listId))
-    //     dispatch(fetchDashboard())
-    // }, [lastUpdate])
 
-   
 
     const createTask = useActionCreator(asyncActions.createTask);
+    const updateTask = useActionCreator(asyncActions.updateTask);
     const deleteTask = useActionCreator(asyncActions.deleteTask);
 
 
@@ -71,7 +67,7 @@ const ListTasks = () => {
 
                 <div className="active-list-tasks-content overflow-auto show-done">
                     {/* {visibleTask.map(t => <Task  key={t.taskId} task={t} onEdit={setModalData} onDelete={deleteTask}/>)} */}
-                    {visibleTask.map(t => <Task key={t.taskId} task={t} onDelete={deleteTask}/>)}
+                    {visibleTask.map(t => <Task key={t.taskId} task={t} onDelete={deleteTask} onEdit={setModalData}/>)}
 
                 </div>
 
@@ -88,7 +84,7 @@ const ListTasks = () => {
                 {activeListContext}
             </div>
             <AddForm onSubmit={createTask} />
-            <EditTaskModal data={modalData} />
+            <EditTaskModal data={modalData} onSubmit={updateTask} />
         </div>
 
     )

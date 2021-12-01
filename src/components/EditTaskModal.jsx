@@ -26,7 +26,7 @@ export default function EditTaskModal({data,...props}) {
     
     const sendToApp = (e) => {
         e.preventDefault()
-        props.onSubmit(task)
+        props.onSubmit(data, task)
         window.$(modal.current).modal('hide')
         e.target.reset()
     }   

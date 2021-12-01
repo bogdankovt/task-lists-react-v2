@@ -1,5 +1,4 @@
-export const DASHBOARD_LOADED = 'DASHBOARD_LOADED'
 
+import * as actions from '../types'
 
-
-export const setDashboardAction = (payload) => ({type: DASHBOARD_LOADED, payload})
+export const setDashboardAction = (payload) => ({type: actions.DASHBOARD_LOADED, payload})

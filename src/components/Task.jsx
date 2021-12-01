@@ -17,8 +17,7 @@ const Task = ({task, ...props}) => {
         taskHeaderClasses.push('bg-success')
     }else if(today > date) {
         taskHeaderClasses.push('bg-danger')
-    }
-    else{
+    }else{
         taskHeaderClasses.push('bg-primary')
     }
     

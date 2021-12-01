@@ -1,4 +1,4 @@
-import * as activeList from "./actions"
+import * as actions from '../types'
 
 
 const activeListInit = {
@@ -6,22 +6,35 @@ const activeListInit = {
     title: '',
     tasks: []
 }
+const updateTaskFromArray = ({task, newTask}, arr) => {
+    let newArr = [...arr]
+    const taskIndex = arr.findIndex(e => e.taskId == task.taskId)
+    const updatedElement = newArr[taskIndex]
+    
+    updatedElement.title = newTask.title
+    updatedElement.desc = newTask.desc
+    updatedElement.isDone = newTask.isDone
+    updatedElement.dueDate = newTask.dueDate
+    return newArr
+}
 
 const removeElInArray = (elem, arr) => {
     return arr.filter(t => t.taskId != elem.taskId)
 }
 
-
 export const activeListReducer = (state = activeListInit, action) => {
     switch(action.type){
 
-        case activeList.ACTIVE_LIST_LOADED: 
+        case actions.ACTIVE_LIST_LOADED: 
             return {...action.payload}
 
-        case activeList.TASK_CREATED: 
+        case actions.TASK_CREATED: 
             return {...state, tasks: [...state.tasks, action.payload]}
         
-        case activeList.TASK_REMOVED:
+        case actions.TASK_UPDATED: 
+            return {...state, tasks: updateTaskFromArray(action.payload, state.tasks)}
+                
+        case actions.TASK_REMOVED:
             return {...state, tasks: removeElInArray(action.payload, state.tasks)}
 
         default:
